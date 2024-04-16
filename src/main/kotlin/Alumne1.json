@@ -1,0 +1,38 @@
+[
+  {
+    "student_id": 111333444,
+    "name": "Sergi",
+    "surname": "Herrador Díaz",
+    "class_id": "DAM",
+    "group": "1A",
+    "scores": [
+      {
+        "type": "exam",
+        "score": 100
+      },
+      {
+        "type": "teamWork",
+        "score": 50
+      }
+    ],
+    "interests": ["music", "gym", "code", "electronics"]
+  },
+  {
+    "student_id": 111222333,
+    "name": "Elkin",
+    "surname": "David",
+    "class_id": "ASIX",
+    "group": "2A",
+    "scores": [
+      {
+        "type": "exam",
+        "score": 33
+      },
+      {
+        "type": "teamWork",
+        "score": 33
+      }
+    ],
+    "interests": ["music", "gym", "code", "electronics"]
+  }
+]
