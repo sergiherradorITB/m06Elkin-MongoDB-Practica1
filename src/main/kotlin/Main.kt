@@ -7,6 +7,7 @@ import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.*
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.bson.Document
 import java.io.File
@@ -53,34 +54,38 @@ fun main() {
 }
 
 fun exercici1(coll: MongoCollection<Document>) {
-    // Lectura del archivo JSON
-    val jsonFile = File("src/main/kotlin/Alumne1.json")
-    println(jsonFile.absolutePath)
-    val jsonText = jsonFile.readText()
-    val students = Json.decodeFromString<List<Student>>(jsonText)
+    // Creamos la lista de estudiantes
+    val students = listOf(
+        Student(
+            student_id = 111333444,
+            name = "Sergi",
+            surname = "Herrador Díaz",
+            class_id = "DAM",
+            group = "1A",
+            scores = listOf(Score(type = "exam", score = 100), Score(type = "teamWork", score = 50)),
+            interests = listOf("music", "gym", "code", "electronics")
+        ),
+        Student(
+            student_id = 111222333,
+            name = "Elkin",
+            surname = "David",
+            class_id = "ASIX",
+            group = "2A",
+            scores = listOf(Score(type = "exam", score = 33), Score(type = "teamWork", score = 33)),
+            interests = listOf("music", "gym", "code", "electronics")
+        )
+    )
 
-    for (i in students) {
-        println(i)
-    }
-
-    // Creación de la lista de documentos MongoDB
-    val documents = students.map { student ->
-        Document("student_id", student.student_id)
-            .append("name", student.name)
-            .append("surname", student.surname)
-            .append("class_id", student.class_id)
-            .append("group", student.group)
-            .append("scores", student.scores.map { score ->
-                Document("type", score.type)
-                    .append("score", score.score)
-            })
-            // Añadir los intereses como una lista de documentos
-            .append("interests", student.interests)
-    }
+    // Convertimos cada objeto `Student` a JSON y los agregamos a la lista `jsonDocuments`
+    val jsonDocuments : MutableList<String> = mutableListOf()
+    val jsonPersonaUno = Json.encodeToString(students[0]) ; jsonDocuments.add(jsonPersonaUno)
+    val jsonPersonaDos = Json.encodeToString(students[1]) ; jsonDocuments.add(jsonPersonaDos)
 
     // Inserción de los documentos a la colección
-    coll.insertMany(documents)
+    coll.insertMany(jsonDocuments.map { Document.parse(it) })
+    // El método `map` transforma cada cadena JSON en un documento `Document` de MongoDB, luego se inserta en la colección.
 }
+
 
 fun exercici2(coll: MongoCollection<Document>) {
     // Mostrar las datos de los estudiantes del mismo grupo
