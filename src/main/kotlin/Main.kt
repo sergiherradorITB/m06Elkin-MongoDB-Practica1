@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 import org.bson.Document
 import java.io.File
 
-
+@Serializable
 data class Student(
     val student_id: Int,
     val name: String,
@@ -23,7 +23,7 @@ data class Student(
     val interests: List<String>
 )
 
-
+@Serializable
 data class Score(val type: String, val score: Int)
 
 
