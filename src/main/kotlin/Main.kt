@@ -31,8 +31,7 @@ fun main() {
     var mongoClient: MongoClient? = null
 
     try {
-        var connectionString =
-            "mongodb+srv://elkin:pepoClown123@sergioherrador.bwwhoy4.mongodb.net/?retryWrites=true&w=majority&appName=SergioHerrador"
+        val connectionString = "mongodb+srv://elkin:pepoClown123@sergioherrador.bwwhoy4.mongodb.net/?retryWrites=true&w=majority&appName=SergioHerrador"
         mongoClient = MongoClients.create(connectionString)
         val db = mongoClient.getDatabase("SergioHerradorDiazLopez")
         val coll: MongoCollection<Document> = db.getCollection("grades")
