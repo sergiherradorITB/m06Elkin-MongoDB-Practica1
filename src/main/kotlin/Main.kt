@@ -51,8 +51,8 @@ fun main() {
     }
 
 }
-
-
+// Exercici 1. Insertar dos estudiants més a la col·lecció "grades"
+// Afegir dos nous estudiants a la colecció grades.
 fun exercici1(coll: MongoCollection<Document>) {
     // Creamos la lista de estudiantes
     val students = listOf(
@@ -87,6 +87,8 @@ fun exercici1(coll: MongoCollection<Document>) {
 }
 
 
+// Exercici 2. Realitza les següents consultes:
+// Mostrar dades dels almne sde la colecció grades amb diferents filtres
 fun exercici2(coll: MongoCollection<Document>) {
     // Mostrar las datos de los estudiantes del mismo grupo
     val studentsInGroupCursor = coll.find(eq("group", "1A"))
