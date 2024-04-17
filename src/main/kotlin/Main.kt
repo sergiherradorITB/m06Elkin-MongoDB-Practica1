@@ -1,5 +1,3 @@
-package org.example
-
 import com.mongodb.MongoException
 import com.mongodb.MongoTimeoutException
 import com.mongodb.client.MongoClient
@@ -30,14 +28,19 @@ fun main() {
     var mongoClient: MongoClient? = null
 
     try {
+        // Connectar-se a servidor de mongoDB
         val connectionString = "mongodb+srv://elkin:pepoClown123@sergioherrador.bwwhoy4.mongodb.net/?retryWrites=true&w=majority&appName=SergioHerrador"
+        // Crear connexió
         mongoClient = MongoClients.create(connectionString)
+        // Obtenir database SergioHerradorDiazLopez de la connexió a servidor
         val db = mongoClient.getDatabase("SergioHerradorDiazLopez")
+        // Obtenir col·lecció  grades de la database
         val coll: MongoCollection<Document> = db.getCollection("grades")
 
         exercici1(coll)
         exercici2(coll)
 
+        // Control de errors.
     } catch (e: MongoTimeoutException) {
         println("No arribem a la base de dades")
     } catch (e: MongoException) {
@@ -89,21 +92,33 @@ fun exercici1(coll: MongoCollection<Document>) {
 // Exercici 2. Realitza les següents consultes:
 // Mostrar dades dels almne sde la colecció grades amb diferents filtres
 fun exercici2(coll: MongoCollection<Document>) {
+
+
+    //Ex 2.1
     // Mostrar las datos de los estudiantes del mismo grupo
     val studentsInGroupCursor = coll.find(eq("group", "1A"))
     println("Estudiantes del grupo 1A:")
     studentsInGroupCursor.forEach { println(it.toJson()) }
 
+
+
+    //Ex. 2.2
     // Mostrar las datos de los estudiantes que tienen un 100 en el examen
     val perfectScoreStudentsCursor = coll.find(and(eq("scores.type", "exam"), eq("scores.score", 100)))
     println("\nEstudiantes con 100 en el examen:")
     perfectScoreStudentsCursor.forEach { println(it.toJson()) }
 
+
+
+    //Ex. 2.3
     // Mostrar las datos de los estudiantes que tienen menos de 50 en el examen
     val failExamStudentsCursor = coll.find(and(eq("scores.type", "exam"), lt("scores.score", 50)))
     println("\nEstudiantes con menos de 50 en el examen:")
     failExamStudentsCursor.forEach { println(it.toJson()) }
 
+
+
+    //Ex. 2.4
     // Mostrar los intereses del estudiante con student_id=111222333
     val studentInterestsCursor = coll.find(eq("student_id", 111222333)).projection(Document("interests", 1))
     println("\nIntereses del estudiante con student_id=111222333:")
