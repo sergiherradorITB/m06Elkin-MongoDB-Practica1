@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 import org.bson.Document
 import java.io.File
 
-@Serializable
+
 data class Student(
     val student_id: Int,
     val name: String,
@@ -21,10 +21,10 @@ data class Student(
     val group: String,
     val scores: List<Score>,
     val interests: List<String>
-) : java.io.Serializable
+)
 
-@Serializable
-data class Score(val type: String, val score: Int) : java.io.Serializable
+
+data class Score(val type: String, val score: Int)
 
 
 fun main() {
@@ -52,6 +52,7 @@ fun main() {
     }
 
 }
+
 
 fun exercici1(coll: MongoCollection<Document>) {
     // Creamos la lista de estudiantes
